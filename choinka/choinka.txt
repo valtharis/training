@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TODO supply a title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+    
+var ctx;
+var t = new Array();
+var i=0;
+function choinka(){
+   var c = document.getElementById("myCanvas");
+   var ctx = c.getContext("2d");
+   ctx.fillStyle="#007700";
+    ctx.beginPath();
+    ctx.moveTo(250,50);
+    ctx.lineTo(225,100);
+    ctx.lineTo(275,100);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(250,100);
+    ctx.lineTo(200,200);
+    ctx.lineTo(300,200);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(250,200);
+    ctx.lineTo(175,350);
+    ctx.lineTo(325,350);
+    ctx.fill();
+ctx.fillStyle="#663300";
+ctx.fillRect(225,350,50,75);
+ctx.fillStyle="#990000";
+ctx.fillRect(160,375,50,50);
+}
+function ClassGwiazdka (row, col, size){
+this.row=row;
+this.col=col;
+this.size=size;
+this.rysuj = function (){
+var c=document.getElementById("myCanvas");
+ctx=c.getContext("2d");
+ctx.save();
+ctx.beginPath();
+ctx.translate(this.row, this.col);
+for(var i=0; i<4;i++){
+ctx.moveTo(0, -this.size/2);
+ctx.lineTo(0, this.size/2);
+ctx.rotate(Math.PI/4);
+}
+ctx.restore();
+ctx.stroke();
+
+};
+}
+function anim2(){
+var timer=setInterval("snieg(10)", 50);
+}
+function dodaj(ile){
+do{
+var i=t.length-1;
+var row=Math.floor(Math.random()*500);
+var col=(Math.random()*500)+1;
+t[i+1]=new ClassGwiazdka(row, col, 10);
+t[i+1].rysuj();
+}while(i<=ile-3);
+
+}
+function snieg(speed){
+ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+choinka();
+for(var j=0;j<t.length;j++){
+if(t[j].col>=500){
+t[j].col=0;
+t[j].row=Math.floor(Math.random()*500);
+}
+t[j].col+=speed;
+t[j].row=t[j].row+(Math.random() * 10) - 5;
+t[j].rysuj();
+}
+}
+
+</script>
+</head>
+<body onload="dodaj(20), anim2();">
+<canvas id="myCanvas" width="500" height="500" style="background-color: aquamarine; border: black; border-width: 2px;"></canvas><br>
+<script>
+</script>
+</body>
+</html>
